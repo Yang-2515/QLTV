@@ -1,0 +1,20 @@
+{
+  "culture": "hi",
+  "texts": {
+    "Menu:Home": "घर",
+    "Welcome": "स्वागत हे",
+    "LongWelcomeMessage": "आवेदन करने के लिए आपका स्वागत है। यह एबीपी ढांचे पर आधारित एक स्टार्टअप परियोजना है। अधिक जानकारी के लिए, abp.io पर जाएं।",
+    "Permission:Example": "Example",
+    "Permission:Create": "Create",
+    "Permission:Update": "Update",
+    "Permission:Delete": "Delete",
+    "Menu:Example": "MenuExample",
+    "Example": "Example",
+    "ExampleName": "ExampleName",
+    "ExampleGhiChu": "ExampleGhiChu",
+    "CreateExample": "CreateExample",
+    "EditExample": "EditExample",
+    "ExampleDeletionConfirmationMessage": "Are you sure to delete the example {0}?",
+    "SuccessfullyDeleted": "Successfully deleted"
+  }
+}

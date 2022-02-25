@@ -1,0 +1,145 @@
+﻿@page
+@using QLTV.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal;
+@inject IHtmlLocalizer<QLTVResource> L
+@model QLTV.Web.Pages.ThuVien.Block.EditModalModel
+@{
+    Layout = null;
+}
+<abp-dynamic-form abp-model="ViewModel" data-ajaxForm="true" asp-page="EditModal">
+    <abp-input asp-for="Id" />
+    <div class="modal fade show" tabindex="-1" role="dialog" aria-modal="true" style="padding-right: 17px; display: block;">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <abp-modal-header title="@L["Edit"].Value @L["TitleBlock"].Value"></abp-modal-header>
+                <abp-modal-body>
+                    <abp-form-content />
+                </abp-modal-body>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><span>@L["Quit"].Value</span></button>
+                    <button id="edit_save" type="submit" class="btn btn-primary" data-busy-text="@L["Saving"].Value"> <span>@L["Save"].Value</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</abp-dynamic-form>
+<script>
+    //Check tránh trường hợp nhập khoảng trắng
+    $("input").on('change', function () {
+        $(this).val($(this).val().trim());
+    });
+
+    function CheckExistError() {
+        var textDangerElements = document.getElementsByClassName('text-danger');
+        for (var i of textDangerElements) {
+            if (i.children.length > 0) {
+                console.log(i.childNodes)
+                return true;
+            }
+
+        }
+        return false;
+    }
+        
+   function CheckValidateNumber()
+    {
+         var numberBookInBlock = parseInt(document.querySelector('#ViewModel_NumberBookInBlock').value);
+         var capacity = parseInt(document.querySelector('#ViewModel_Capacity').value);
+         
+
+          if ((numberBookInBlock > capacity) && (capacity != null) && (numberBookInBlock != null)) {
+            var textDangerElements = document.getElementsByClassName('text-danger');
+            for (var i of textDangerElements) {
+                if (i.getAttribute('data-valmsg-for') === 'ViewModel.NumberBookInBlock') {
+                    i.innerHTML = `<span id = "ViewModel_NumberBookInBlock-error" class> @L["NumberBookInBlock_Error"] </span>`;
+                }
+                
+                if (i.getAttribute('data-valmsg-for') === 'ViewModel.Capacity') {
+                    i.innerHTML = `<span id = "ViewModel_Capacity-error" class>@L["Capacity_Error"] </span>`;
+                }
+                
+            }
+            document.getElementById('edit_save').setAttribute("disabled", "true");
+        }
+        else {
+            if (document.getElementById('ViewModel_NumberBookInBlock-error')) {
+                document.getElementById('ViewModel_NumberBookInBlock-error').remove();
+            }
+
+            if (document.getElementById('ViewModel_Capacity-error')) {
+                document.getElementById('ViewModel_Capacity-error').remove();
+              }
+
+            if (!CheckExistError()) {
+                document.getElementById('edit_save').removeAttribute("disabled");
+            }
+            
+        }
+    }
+
+
+    function CheckValidateAvailable()
+    {
+         var numberBookInBlock = parseInt(document.querySelector('#ViewModel_NumberBookInBlock').value);
+         var capacity = parseInt(document.querySelector('#ViewModel_Capacity').value);
+         var availableSpace =parseInt(document.querySelector('#ViewModel_AvailableSpace').value);
+
+          if (((availableSpace < (capacity - numberBookInBlock)) || (availableSpace > capacity)) && (availableSpace!= null)) {
+            var textDangerElements = document.getElementsByClassName('text-danger');
+            for (var i of textDangerElements) {
+                if (i.getAttribute('data-valmsg-for') === 'ViewModel.AvailableSpace') {
+                    i.innerHTML = `<span id = "ViewModel_AvailableSpace-error" class> @L["AvailableSpace_Error"]  </span>`;
+                }
+                
+            }
+            document.getElementById('edit_save').setAttribute("disabled", "true");
+        }
+        else {
+
+            if (document.getElementById('ViewModel_AvailableSpace-error')) {
+                document.getElementById('ViewModel_AvailableSpace-error').remove();
+            }
+            if (!CheckExistError()) {
+                document.getElementById('edit_save').removeAttribute("disabled");
+            }
+        }
+    }
+     var NameBlock = document.querySelector('#ViewModel_NameBlock').value;
+     function CheckExistNameBlockInDB(e) {
+        if (e.target.value !== "" && e.target.value !== NameBlock) {
+            qLTV.thuVien.block.checkExistNameBlock(e.target.value).then((result) => {
+                if (result) {
+                    var TextDangerElements = document.getElementsByClassName('text-danger')
+                    for (var i of TextDangerElements) {
+                        if (i.getAttribute("data-valmsg-for") === "ViewModel.NameBlock")
+                            i.innerHTML = `<span id = "ViewModel_NameBlock-error" class>@L["Error_Name"]</span>`
+                    }
+                    document.getElementById('edit_save').setAttribute("disabled", "true")
+                }
+                else {
+                    if (document.getElementById('ViewModel_NameBlock-error')) {
+                        document.getElementById('ViewModel_NameBlock-error').remove()
+                    }
+                    if (!CheckExistError()) {
+                        document.getElementById('edit_save').removeAttribute("disabled");
+                    }
+                }
+            })
+        }
+    }
+    document.getElementById('ViewModel_AvailableSpace').addEventListener('blur', CheckValidateAvailable);
+    document.getElementById('ViewModel_NameBlock').addEventListener('blur', CheckExistNameBlockInDB)
+    document.getElementById('ViewModel_NumberBookInBlock').addEventListener('blur', CheckValidateNumber);
+    document.getElementById('ViewModel_Capacity').addEventListener('blur', CheckValidateNumber);
+
+    document.getElementById('ViewModel_AvailableSpace').addEventListener('keyup', CheckValidateAvailable);
+    document.getElementById('ViewModel_NameBlock').addEventListener('keyup', CheckExistNameBlockInDB)
+    document.getElementById('ViewModel_NumberBookInBlock').addEventListener('keyup', CheckValidateNumber);
+    document.getElementById('ViewModel_Capacity').addEventListener('keyup', CheckValidateNumber);
+
+    document.getElementById('ViewModel_NameBlock').addEventListener('change', CheckExistNameBlockInDB)
+    document.getElementById('ViewModel_AvailableSpace').addEventListener('change', CheckValidateAvailable);
+    document.getElementById('ViewModel_NumberBookInBlock').addEventListener('change', CheckValidateNumber);
+    document.getElementById('ViewModel_Capacity').addEventListener('change', CheckValidateNumber);
+</script>

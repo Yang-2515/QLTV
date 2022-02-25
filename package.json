@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@volo/abp.ng.language-management": "^5.0.1"
+  }
+}

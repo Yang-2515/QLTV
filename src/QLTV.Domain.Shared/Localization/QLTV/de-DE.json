@@ -1,0 +1,20 @@
+{
+  "culture": "de-DE",
+  "texts": {
+    "Menu:Home": "Home",
+    "Welcome": "Willkommen",
+    "LongWelcomeMessage": "Willkommen bei der Anwendung. Dies ist ein Startup-Projekt, das auf dem ABP-Framework basiert. Weitere Informationen finden Sie unter abp.io.",
+    "Permission:Example": "Example",
+    "Permission:Create": "Create",
+    "Permission:Update": "Update",
+    "Permission:Delete": "Delete",
+    "Menu:Example": "MenuExample",
+    "Example": "Example",
+    "ExampleName": "ExampleName",
+    "ExampleGhiChu": "ExampleGhiChu",
+    "CreateExample": "CreateExample",
+    "EditExample": "EditExample",
+    "ExampleDeletionConfirmationMessage": "Are you sure to delete the example {0}?",
+    "SuccessfullyDeleted": "Successfully deleted"
+  }
+}

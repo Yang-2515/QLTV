@@ -1,0 +1,20 @@
+{
+  "culture": "ru",
+  "texts": {
+    "Menu:Home": "Главная",
+    "Welcome": "Добро пожаловать",
+    "LongWelcomeMessage": "Добро пожаловать в приложение. Этот запущенный проект основан на фреймворке ABP. Для получения дополнительной информации посетите сайт abp.io.",
+    "Permission:Example": "Example",
+    "Permission:Create": "Create",
+    "Permission:Update": "Update",
+    "Permission:Delete": "Delete",
+    "Menu:Example": "MenuExample",
+    "Example": "Example",
+    "ExampleName": "ExampleName",
+    "ExampleGhiChu": "ExampleGhiChu",
+    "CreateExample": "CreateExample",
+    "EditExample": "EditExample",
+    "ExampleDeletionConfirmationMessage": "Are you sure to delete the example {0}?",
+    "SuccessfullyDeleted": "Successfully deleted"
+  }
+}

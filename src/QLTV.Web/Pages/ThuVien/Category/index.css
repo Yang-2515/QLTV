@@ -1,0 +1,134 @@
+﻿/*============================== SETUP BAN ĐẦU ==========================*/
+:root {
+    --blue-color: #05bae4;
+    --black-color: #2c3146;
+    --margin-left: 260px;
+    --blue-green-color: #28a799;
+}
+
+.main-sidebar {
+    background-color: var(--black-color) !important;
+    width: var(--margin-left);
+}
+
+.main-header {
+    background-color: var(--black-color);
+    margin-left: var(--margin-left);
+}
+
+.content-wrapper {
+    margin-left: var(--margin-left) !important;
+    background-color: var(--black-color);
+}
+
+.main-footer {
+    margin-left: var(--margin-left) !important;
+    border: none;
+    background-color: var(--black-color) !important;
+    color: white !important;
+}
+
+.nav-link {
+    color: white !important
+}
+
+.wrapper {
+    background-color: var(--black-color) !important
+}
+
+.fa-th{
+    color: var(--blue-color)
+}
+
+/*==================================Search*/
+.introduce {
+    box-shadow: 0 0 20px 20px rgba(0, 0, 0, 0.1), inset 0 0 4px 2px rgba(5, 186, 228, 0.5);
+}
+
+.card-search {
+}
+
+.card-body {
+    background-color: var(--black-color);
+    border-radius: 3px
+}
+/*===========================footer của table*/
+#AuthorTable_info {
+    color: white;
+    display: none
+}
+
+.dataTable_footer {
+    padding: 10px 0px;
+}
+
+.dataTables_length {
+    display: none
+}
+
+/*==================================BUTTON CREATE==========================================*/
+.btn-create {
+    background-color: var(--blue-color);
+    color: var(--black-color)
+}
+
+.btn-create:hover {
+    background-color: var(--blue-green-color);
+    color: var(--black-color)
+}
+
+/*==================================Table*/
+.dataTables_scrollHeadInner {
+    width: 100% !important;
+}
+
+#CategoriesTable tbody tr:hover {
+    color: var(--blue-color);
+    background-color: rgba(255, 255, 255, 0.15);
+    cursor: pointer
+}
+
+#CategoriesTable thead tr th {
+    padding: 0px !important
+}
+
+table thead tr th:first-child {
+    padding-bottom: 12px !important
+}
+
+.CT-Stt {
+    width: 5% !important
+}
+
+.CT-CategoryName {
+    width: 20% !important
+}
+
+.CT-CategoryDes {
+    width: 70% !important
+}
+
+.CT-Delete {
+    width: 5% !important
+}
+
+.btn-delete{
+    background-color: aquamarine
+}
+/*=================================Modal*/
+.modal-content {
+    background-color: var(--black-color)
+}
+
+.modal-header {
+    background-color: var(--blue-color);
+    color: var(--black-color);
+}
+
+.modal-body {
+    color: white;
+}
+
+.close{
+    font-size: 2.1rem
+}

@@ -1,0 +1,57 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal;
+@using QLTV.Localization
+@using QLTV.ThuVien.Dtos.Reader
+@inject IHtmlLocalizer<QLTVResource> L
+@model QLTV.Web.Pages.ThuVien.Reader.CreateModalModel
+@{
+    Layout = null;
+}
+
+<abp-dynamic-form abp-model="ViewModel" data-ajaxForm="true" asp-page="CreateModal">
+    <div class="modal fade show" tabindex="-1" role="dialog" aria-modal="true" style="padding-right: 17px; display: block;">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <abp-modal-header title="@L["Create"].Value @L["TitleReader"].Value"></abp-modal-header>
+                <abp-modal-body>
+                    <abp-form-content />
+                </abp-modal-body>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><span>@L["Quit"].Value</span></button>
+                    <button id="create_save" type="submit" class="btn btn-primary" data-busy-text="@L["Saving"].Value"> <span>@L["Save"].Value</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</abp-dynamic-form>
+<script>
+    //Check tránh trường hợp nhập khoảng trắng
+    $("input").on('change', function () {
+        $(this).val($(this).val().trim());
+    });
+
+    function CheckExistIdInDB(e) {
+        if (e.target.value !== "") {
+            qLTV.thuVien.reader.checkExistIdCard(e.target.value).then((result) => {
+                if (result) {
+                    var TextDangerElements = document.getElementsByClassName('text-danger')
+                    for (var i of TextDangerElements) {
+                        if (i.getAttribute("data-valmsg-for") === "ViewModel.IdCard")
+                            i.innerHTML = `<span id = "ViewModel_IdCard-error" class>@L["ExistIdCard"]</span>`
+                    }
+                    document.getElementById('create_save').setAttribute("disabled", "true")
+                }
+                else {
+                    if (document.getElementById('ViewModel_IdCard-error')) {
+                        document.getElementById('ViewModel_IdCard-error').remove()
+                    }
+                    document.getElementById('create_save').removeAttribute("disabled")
+                }
+            })
+        }
+    }
+    
+    document.getElementById('ViewModel_IdCard').addEventListener('keyup', CheckExistIdInDB)
+    document.getElementById('ViewModel_IdCard').addEventListener('blur', CheckExistIdInDB)
+</script>

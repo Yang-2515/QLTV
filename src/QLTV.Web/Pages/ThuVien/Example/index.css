@@ -1,0 +1,30 @@
+﻿/*============================== SETUP BAN ĐẦU ==========================*/
+:root {
+    --blue-color: #05bae4;
+    --back-color: #2c3146;
+    --margin-left: 280px;
+}
+
+.main-sidebar {
+    background-color: var(--back-color);
+    width: var(--margin-left);
+}
+
+.main-header {
+    margin-left: var(--margin-left) !important;
+}
+
+.content-wrapper {
+    margin-left: var(--margin-left) !important;
+}
+
+.main-footer {
+    margin-left: var(--margin-left) !important;
+}
+
+.fa-home{
+    color: var(--blue-color)
+}
+
+/*============================================================================*/
+

@@ -1,0 +1,177 @@
+﻿/*============================== SETUP BAN ĐẦU ==========================*/
+:root {
+    --blue-color: #05bae4;
+    --black-color: #2c3146;
+    --margin-left: 260px;
+    --blue-green-color: #28a799;
+}
+
+.main-sidebar {
+    background-color: var(--black-color) !important;
+    width: var(--margin-left);
+}
+
+.main-header {
+    background-color: var(--black-color);
+    margin-left: var(--margin-left);
+}
+
+.content-wrapper {
+    margin-left: var(--margin-left) !important;
+    background-color: var(--black-color);
+}
+
+.main-footer {
+    margin-left: var(--margin-left) !important;
+    border: none;
+    background-color: var(--black-color) !important;
+    color: white !important;
+}
+
+.nav-link {
+    color: white !important
+}
+
+.wrapper {
+    background-color: var(--black-color) !important
+}
+
+.fa-book{
+    color: var(--blue-color)
+}
+
+/*==================================Search*/
+.introduce {
+    box-shadow: 0 0 20px 20px rgba(0, 0, 0, 0.1), inset 0 0 4px 2px rgba(5, 186, 228, 0.5);
+}
+
+.card-search {
+}
+
+.card-body {
+    background-color: var(--black-color);
+    border-radius: 3px
+}
+/*===========================footer của table*/
+#BooksTable_info {
+    color: white;
+    display: none
+}
+
+.dataTable_footer {
+    padding: 10px 0px;
+}
+
+.dataTables_length {
+    display: none
+}
+
+/*==================================BUTTON CREATE==========================================*/
+.btn-create {
+    background-color: var(--blue-color);
+    color: var(--black-color)
+}
+
+.btn-create:hover {
+    background-color: var(--blue-green-color);
+    color: var(--black-color)
+}
+/*========================================== Bộ lọc*/
+.fa-filter {
+    color: var(--blue-color);
+}
+
+.filter-title {
+    color: var(--blue-color)
+}
+
+.filter-body {
+    width: 50% !important;
+}
+
+.filter-price-title {
+    color: var(--blue-color)
+}
+
+#price_range{
+    width: 250px
+}
+
+#price_show{
+    font-size: 0.8rem
+}
+/*==================================Table*/
+.dataTables_scrollHeadInner {
+    width: 100% !important;
+}
+
+#BooksTable tbody tr:hover {
+    color: var(--blue-color);
+    background-color: rgba(255, 255, 255, 0.15);
+    cursor: pointer
+}
+
+#BooksTable thead tr th {
+    padding: 0px !important
+}
+
+table thead tr th:first-child {
+    padding-bottom: 12px !important
+}
+
+.BookT-Stt{
+    width: 5% !important;
+}
+
+.BookT-BookName {
+    width: 18% !important;
+}
+
+.BookT-PublishDate {
+    width: 12% !important;
+}
+
+.BookT-Price {
+    width: 10% !important;
+}
+
+.BookT-Number {
+    width: 10% !important;
+}
+
+.BookT-Category {
+    width: 10% !important;
+}
+
+.BookT-Author {
+    width: 15% !important;
+}
+
+.BookT-Block {
+    width: 15% !important;
+}
+
+.BookT-Delete {
+    width: 5% !important;
+}
+
+.btn-delete {
+    background-color: aquamarine
+}
+/*=================================Modal*/
+.modal-content {
+    background-color: var(--black-color)
+}
+
+.modal-header {
+    background-color: var(--blue-color);
+    color: var(--black-color);
+}
+
+.modal-body {
+    color: white;
+}
+
+.close {
+    font-size: 2.1rem
+}

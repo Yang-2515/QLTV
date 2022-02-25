@@ -1,0 +1,101 @@
+﻿@page
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using QLTV.Web.Pages.ThuVien.Author
+@using QLTV.Localization
+@using QLTV.Permissions
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<QLTVResource> L
+@inject IAuthorizationService Authorization
+@model QLTV.Web.Pages.ThuVien.Author.IndexModel
+@{
+    PageLayout.Content.Title = L["Author"].Value;
+}
+
+@section scripts    
+{
+    <abp-script src="/Pages/ThuVien/Author/index.js" />
+}
+@section styles
+{
+    <abp-style src="/Pages/ThuVien/Author/index.css" />
+}
+
+<section class="content mt-2 p-0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-search">
+                    <!-- /.box-header -->
+                    <div class="card-body introduce">
+                        <div class="form-group search-form-group">
+                            <label class="text-white" for="search">@L["Search_Key_Author"].Value</label>
+
+                            <div class="input-group search-input-group">
+                                <input type="text" id="keysearch" class="form-control search-form-control"
+                                       placeholder="@L["Search_Author"].Value">
+                                <span class="input-group-append">
+                                    <button type="submit" class="btn btn-default" id="Search">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <span class="text-danger field-validation-valid" data-valmsg-for="search" data-valmsg-replace="true">
+                            </span>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content-header pb-2 p-1">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="text-right col-md-12">
+                @if (await Authorization.IsGrantedAsync(QLTVPermissions.Author.Create))
+                {
+                    <button id="NewAuthor" class="btn btn-add-general btn-create"
+                            type="button" data-busy-text="Processing...">
+                        <i class="fa fa-plus pr-1"></i> <span>@L["Create"].Value</span>
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content pt-4">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <div class="row">
+                                <div class="table-responsive col-sm-12">
+                                    <table id="AuthorTable" class="text-white table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="AT-Stt pb-1" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending">@L["STT"].Value</th>
+                                                <th class="AT-AuthorName" aria-controls="example2" rowspan="1" colspan="1">@L["AuthorName"].Value</th>
+                                                <th class="AT-DateOfBirth" aria-controls="example2" rowspan="1" colspan="1">@L["DateOfBirth"].Value</th>
+                                                <th class="AT-AuthorDes text-center" aria-controls="example2" rowspan="1" colspan="1">@L["AuthorDescription"].Value</th>
+                                                <th class="AT-Delete" aria-controls="example2" rowspan="1" colspan="1"></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

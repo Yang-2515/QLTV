@@ -1,0 +1,118 @@
+﻿@page
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using QLTV.Web.Pages.ThuVien.Borrow
+@using QLTV.Localization
+@using QLTV.Permissions
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<QLTVResource> L
+@inject IAuthorizationService Authorization
+@model QLTV.Web.Pages.ThuVien.Borrow.IndexModel
+@{
+    PageLayout.Content.Title = L["Borrow"].Value;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/ThuVien/Borrow/index.js" />
+}
+@section styles
+{
+    <abp-style src="/Pages/ThuVien/Borrow/index.css" />
+}
+<section class="content mt-2 p-0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-search">
+
+                    <!-- /.box-header -->
+                    <div class="card-body introduce">
+                        <div class="form-group search-form-group">
+                            <label class="text-white" for="search">@L["Search_Key_Borrow"].Value</label>
+                            <div class="input-group search-input-group">
+                                <input type="text" id="keysearch" class="form-control search-form-control"
+                                       placeholder="@L["Search_Borrow"].Value">
+                                <span class="input-group-append">
+                                    <button type="submit" class="btn btn-default" id="Search">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <span class="text-danger field-validation-valid" data-valmsg-for="search" data-valmsg-replace="true">
+                            </span>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content-header pb-2 p-1">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="filter text-white d-flex align-items-center justify-content-around">
+                    <h4 class="filter-title pr-4 d-flex align-items-center">
+                        <i class="fas fa-filter pr-2"></i> @L["Filter_Borrow"].Value
+                    </h4>
+
+                    <select class="filter-body custom-select rounded-1 d-flex flex-column-reverse form-select" id="keywordCombobox" aria-label="Default select example">
+                        <option value="none"></option>
+                        <option value="Yes">@L["YES"]</option>
+                        <option value="No">@L["NO"]</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="text-right col-md-3"></div>
+
+            <div class="text-right col-md-6">
+                @if (await Authorization.IsGrantedAsync(QLTVPermissions.Borrow.Create))
+                {
+                    <button id="NewBorrow" class="btn btn-add-general btn-create"
+                            type="button" data-busy-text="Processing...">
+                        <i class="fa fa-plus pr-1"></i> <span>@L["Create"].Value</span>
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content pt-4">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <div class="row">
+                                <div class="table-responsive col-sm-12">
+                                    <table id="BorrowTable" class="text-white table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="BorrowT-Stt" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending">@L["STT"].Value</th>
+                                                <th class="BorrowT-DateBorrow" aria-controls="example2" rowspan="1" colspan="1">@L["DateBorrow"].Value</th>
+                                                <th class="BorrowT-DateReturn" aria-controls="example2" rowspan="1" colspan="1">@L["DateReturn"].Value</th>
+                                                <th class="BorrowT-IsReturnBook" aria-controls="example2" rowspan="1" colspan="1">@L["IsReturnBook"].Value</th>
+                                                <th class="BorrowT-BookBorrow" aria-controls="example2" rowspan="1" colspan="1">@L["BookBorrow"].Value</th>
+                                                <th class="BorrowT-ReaderBorrow" aria-controls="example2" rowspan="1" colspan="1">@L["ReaderBorrow"].Value</th>
+                                                <th class="BorrowT-Delete" aria-controls="example2" rowspan="1" colspan="1"></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,98 @@
+﻿@page
+@using QLTV.Web.Pages.ThuVien.Category
+@using QLTV.Localization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using QLTV.Permissions
+@inject IHtmlLocalizer<QLTVResource> L
+@inject IPageLayout PageLayout
+@inject IAuthorizationService Authorization
+
+@model IndexModel
+@section scripts
+{
+    <abp-script src="/Pages/ThuVien/Category/Index.js" />
+}
+@section styles
+{
+    <abp-style src="/Pages/ThuVien/Category/index.css" />
+}
+
+<section class="content mt-2 p-0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-search">
+                    <!-- /.box-header -->
+                    <div class="card-body introduce">
+                        <div class="form-group search-form-group">
+                            <label class="text-white" for="search">@L["Search_Key_Category"].Value</label>
+                            <div class="input-group search-input-group">
+                                <input type="text" id="keyword" class="form-control search-form-control"
+                                       placeholder="@L["Search_Category"].Value">
+                                <span class="input-group-append">
+                                    <button type="submit" class="btn btn-default" id="Search">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <span class="text-danger field-validation-valid" data-valmsg-for="search" data-valmsg-replace="true">
+                            </span>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content-header pb-2 p-1">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="text-right col-md-12">
+                @if (await Authorization.IsGrantedAsync(QLTVPermissions.Category.Create))
+                {
+                    <button id="NewCategory" class="btn btn-add-general btn-create"
+                            type="button" data-busy-text="Processing...">
+                        <i class="fa fa-plus pr-1"></i> <span>@L["Create"].Value</span>
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content pt-4">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <div class="row">
+                                <div class="table-responsive col-sm-12">
+                                    <table id="CategoriesTable" class="text-white table table-bordered table-hover dataTable dtr-inline" role="grid">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="CT-Stt" rowspan="1" colspan="1" aria-sort="ascending">@L["STT"].Value</th>
+                                                <th class="CT-CategoryName" rowspan="1" colspan="1">@L["CategoryName"].Value</th>
+                                                <th class="CT-CategoryDes text-center" rowspan="1" colspan="1">@L["CategoryDescription"].Value</th>
+                                                <th class="CT-Delete" rowspan="1" colspan="1"></th>
+
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,48 @@
+@page
+@using QLTV.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using QLTV.Web.Pages.ThuVien.Example
+@using QLTV.Localization
+@using QLTV.Web.Menus
+@model IndexModel
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<QLTVResource> L
+@inject IAuthorizationService Authorization
+@{
+    PageLayout.Content.Title = L["Example"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:Example"].Value);
+    PageLayout.Content.MenuItemName = QLTVMenus.Example;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/ThuVien/Example/index.js" />
+}
+@section styles
+{
+    <abp-style src="/Pages/ThuVien/Example/index.css"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["Example"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-right">
+			    @if (await Authorization.IsGrantedAsync(QLTVPermissions.Category.Create))
+                {
+                <abp-button id="NewExampleButton"
+                            text="@L["CreateExample"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="ExampleTable" class="nowrap"/>
+    </abp-card-body>
+</abp-card>

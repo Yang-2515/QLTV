@@ -1,0 +1,138 @@
+﻿@page
+@using QLTV.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal;
+@inject IHtmlLocalizer<QLTVResource> L
+@model QLTV.Web.Pages.ThuVien.Book.EditModalModel
+@{
+    Layout = null;
+}
+<abp-dynamic-form abp-model="ViewModel" data-ajaxForm="true" asp-page="EditModal">
+    <abp-input asp-for="Id" />
+    <abp-input asp-for="CurrentNumber" />
+    <div class="modal fade show" tabindex="-1" role="dialog" aria-modal="true" style="padding-right: 17px; display: block;">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <abp-modal-header title="@L["Edit"].Value @L["TitleBook"].Value"></abp-modal-header>
+                <abp-modal-body>
+                    <abp-form-content />
+                </abp-modal-body>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@L["Quit"].Value</button>
+                    <button id="edit_save" type="submit" class="btn btn-primary" data-busy-text="@L["Saving"].Value"> <span>@L["Save"].Value</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</abp-dynamic-form>
+<script>
+
+    //console.log("hello");
+    //console.log(document.getElementById("Id").value);
+    //Check tránh trường hợp nhập khoảng trắng
+    $("input").on('change', function () {
+        $(this).val($(this).val().trim());
+    });
+
+    function CheckExistError() {
+        var textDangerElements = document.getElementsByClassName('text-danger');
+        for (var i of textDangerElements) {
+            if (i.children.length > 0) {
+                console.log(i.childNodes)
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    function checkExistingBook(e)
+    {
+
+
+        if (e.target.value)
+        {
+            //console.log(e.target.value);
+            var name = document.getElementById("ViewModel_NameBook").value;
+            var author = document.getElementById("ViewModel_IdAuthor").value;
+            var idbook = document.getElementById("Id").value;
+            qLTV.thuVien.book.checkExistingBookWithId(name, author, idbook).then((result) => {
+                //console.log(result);
+                if (result) {
+                    var TextDangerElements = document.getElementsByClassName('text-danger')
+                    for (var i of TextDangerElements) {
+                        if (i.getAttribute("data-valmsg-for") === "ViewModel.IdAuthor")
+                            i.innerHTML = `<span id = "ViewModel_IdAuthor-error" class>@L["SelectAnotherAuthorForThisBook"]</span>`
+                        if (i.getAttribute("data-valmsg-for") === "ViewModel.NameBook")
+                            i.innerHTML = `<span id = "ViewModel_NameBook-error" class>@L["InvalidBookName"]</span>`
+                    }
+                    document.getElementById('edit_save').setAttribute("disabled", "true")
+                }
+                else {
+                    if (document.getElementById('ViewModel_IdAuthor-error')) {
+                        document.getElementById('ViewModel_IdAuthor-error').remove()
+                    }
+                    if (document.getElementById('ViewModel_NameBook-error')) {
+                        document.getElementById('ViewModel_NameBook-error').remove()
+                    }
+                    if (!CheckExistError()) {
+                        document.getElementById('edit_save').removeAttribute("disabled");
+                    }
+                }
+            })
+
+        }
+
+    }
+    function checkEnoughSpaces(e1)
+    {
+        if (e1.target.value)
+        {
+            //console.log(CurrentNumber.value);
+            var blockid = document.getElementById("ViewModel_IdBlock").value;
+            var number = 0;
+            if (document.getElementById("ViewModel_NumberBook").value)
+                number = document.getElementById("ViewModel_NumberBook").value - CurrentNumber.value;
+            qLTV.thuVien.block.checkEnoughSpaces(blockid, number).then(
+                (result) => {
+                    if (result === false)
+                    {
+
+                        var TextDangerElements = document.getElementsByClassName('text-danger')
+                        for (var i of TextDangerElements) {
+                            if (i.getAttribute("data-valmsg-for") === "ViewModel.IdBlock")
+                                i.innerHTML = `<span id = "ViewModel_IdBlock-error">@L["NotEnoughSpace"]</span>`
+                            if (i.getAttribute("data-valmsg-for") === "ViewModel.NumberBook") {
+                                i.innerHTML = `<span id = "ViewModel_NumberBook-error">@L["NotEnoughSpace"]</span>`
+                            }
+
+                        }
+                        document.getElementById('edit_save').setAttribute("disabled", "true")
+
+
+                    }
+                    else
+                    {
+                        if (document.getElementById('ViewModel_IdBlock-error'))
+                            document.getElementById('ViewModel_IdBlock-error').remove()
+                        if (document.getElementById('ViewModel_NumberBook-error'))
+                            document.getElementById('ViewModel_NumberBook-error').remove()
+                        if (!CheckExistError()) {
+                            document.getElementById('edit_save').removeAttribute("disabled");
+                        }
+
+                    }
+                })
+        }
+    }
+
+    document.getElementById('ViewModel_NameBook').addEventListener('keyup', checkExistingBook);
+    document.getElementById('ViewModel_NameBook').addEventListener('blur', checkExistingBook);
+    document.getElementById('ViewModel_IdAuthor').addEventListener('blur', checkExistingBook);
+    document.getElementById('ViewModel_IdAuthor').addEventListener('change', checkExistingBook);
+
+    document.getElementById('ViewModel_NumberBook').addEventListener('keyup', checkEnoughSpaces);
+    document.getElementById('ViewModel_NumberBook').addEventListener('blur', checkEnoughSpaces);
+    document.getElementById('ViewModel_IdBlock').addEventListener('blur', checkEnoughSpaces);
+    document.getElementById('ViewModel_IdBlock').addEventListener('change', checkEnoughSpaces);
+</script>

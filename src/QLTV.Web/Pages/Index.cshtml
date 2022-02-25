@@ -1,0 +1,310 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using QLTV.Localization
+@using Volo.Abp.Users
+@model QLTV.Web.Pages.IndexModel
+@inject IHtmlLocalizer<QLTVResource> L
+@inject ICurrentUser CurrentUser
+@section styles {
+    <abp-style src="/Pages/Index.css" />
+}
+@section scripts {
+    <abp-script src="/Pages/Chart/chart.js" />
+    <abp-script src="/Pages/Chart/Chartjs_plugin_datalabels.js" />
+    <abp-script src="/Pages/Index.js" />
+    <abp-script src="/Pages/Chart/SlideChart.js" />
+    <abp-script src="/Pages/Chart/TopReader.js" />
+    <abp-script src="/Pages/Chart/TopCategory.js" />
+    <abp-script src="/Pages/Chart/TopBook.js" />
+}
+
+<div class="container-fluid border-left">
+    @if (!CurrentUser.IsAuthenticated)
+    {
+        <a abp-button="Primary" href="~/Account/Login"><i class="fa fa-sign-in"></i> @L["Login"]</a>
+    }
+
+    <div class="title text-center py-3 d-flex justify-content-center">
+        <div class="avata rounded-circle"></div>
+        <div class="library-name display-2 font-weight-bold d-flex align-items-center">
+            <pre class="name"><u class="text-white">ALPHA</u> Library</pre>
+        </div>
+    </div>
+
+    <div class="slide-show border-bottom">
+        <div class="slide-1 slide">
+            <div class="text-header d-flex justify-content-center">
+                <div class="slide-1-text-1 display-2 text-white font-weight-bold">
+                    @L["WhatALPHA"]
+                </div>
+                <div class="slide-1-text-2 display-2 text-white font-weight-bold">?</div>
+            </div>
+            <h3 class="slide-1-text-3 text-white text-center">This website provides you with functions, charts, infomation to manage your library</h3>
+        </div>
+
+        <div class="slide-2 slide">
+            <div class="text-header d-flex justify-content-center">
+                <div class="slide-2-text-1 display-2 text-black font-weight-bold pt-5">Manager</div>
+                <div class="slide-2-text-2 display-2 text-black font-weight-bold">6</div>
+                <div class="slide-2-text-3 display-2 text-black font-weight-bold pt-5">Table</div>
+            </div>
+
+            <div class="slide-2-text-body d-flex justify-content-between">
+                <div class="text-body-left">
+                    <a class="slide-2-btn text-white text-center mt-3 mb-5 d-flex justify-content-center" href="/ThuVien/Category">
+                        <i class="slide-2-icon fa fa-th my-3 d-block text-white"></i> Table Category
+                    </a>
+
+                    <a class="slide-2-btn text-white text-center my-5 d-flex justify-content-center" href="/ThuVien/Author">
+                        <i class="slide-2-icon fa fa-user-edit my-3 d-block text-white"></i>Table Author
+                    </a>
+
+                    <a class="slide-2-btn text-white text-center my-5 d-flex justify-content-center" href="/ThuVien/Reader">
+                        <i class="slide-2-icon fa fa-book-reader my-3 d-block text-white"></i>Table Reader
+                    </a>
+                </div>
+
+                <div class="text-body-right">
+                    <a class="slide-2-btn text-white text-center mt-3 mb-5 d-flex justify-content-center" href="/ThuVien/Block">
+                        <i class="slide-2-icon fas fa-archive my-3 d-block text-white"></i>Table Block
+                    </a>
+
+                    <a class="slide-2-btn text-white text-center my-5 d-flex justify-content-center" href="/ThuVien/Borrow">
+                        <i class="slide-2-icon fas fa-hands-helping my-3 d-block text-white"></i>Table Borrow
+                    </a>
+
+                    <a class="slide-2-btn text-white text-center my-5 d-flex justify-content-center" href="/ThuVien/Book">
+                        <i class="slide-2-icon fas fa-book my-3 d-block text-white"></i>Table Book
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-3 slide">
+            <div class="d-flex justify-content-between">
+                <div class="text-header pt-5">
+                    <div class="slide-3-text-1 display-2 text-white font-weight-bold mt-5 ml-5">
+                        Make
+                    </div>
+                    <div class="slide-3-text-2 display-2 text-black font-weight-bold mt-3 ml-5 pl-5">
+                        Statistics
+                    </div>
+                </div>
+
+                <div class="slide-3-all-chart mt-2">
+                    <canvas id="slide-3-chart-1" width="200" height="200"></canvas>
+                </div>
+
+                <div class="slide-3-all-chart mt-3 mr-2">
+                    <canvas id="slide-3-chart-2" width="200" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-control-prev">
+            <a class="prev" onclick="plusSlides(-1)">
+                <i class="icon-prev fas fa-chevron-left"></i>
+            </a>
+        </div>
+
+        <div class="slide-control-next">
+            <a class="next" onclick="plusSlides(1)">
+                <i class="icon-next fas fa-chevron-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="introduce py-4 mt-4 text-center text-white">
+        <h3>@L["IntroduceTable"]</h3>
+    </div>
+
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="row">
+                <div class="card-item col-lg-4 text-white text-center my-3">
+                    <h5 class="text-center mb-4 pl-0"><i class="fa fa-th my-3 d-block text-white fa-2x"></i>Table Category</h5>
+                    <p>@L["IntroduceCategory"]</p>
+                    <a class="show-table mb-3" abp-button="Success" href="/ThuVien/Category">Table here<i class="fa fa-sign-in ml-2"></i></a>
+                </div>
+
+                <div class="card-item col-lg-4 text-white text-center my-3">
+                    <h5 class="text-center mb-4"><i class="fa fa-user-edit my-3 d-block text-white fa-2x"></i>Table Author</h5>
+                    <p>@L["IntroduceAuthor"]</p>
+                    <a class="show-table mb-3" abp-button="Success" href="/ThuVien/Author">Table here<i class="fa fa-sign-in ml-2"></i></a>
+                </div>
+
+                <div class="card-item col-lg-4 text-white text-center my-3">
+                    <h5 class="text-center mb-4"><i class="fa fa-book-reader my-3 d-block fa-2x"></i>Table Reader</h5>
+                    <p>@L["IntroduceReader"]</p>
+                    <a class="show-table mb-3" abp-button="Success" href="/ThuVien/Reader">Table here<i class="fa fa-sign-in ml-2"></i></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="card-item col-lg-4 text-white text-center">
+                    <h5 class="text-center mb-4"><i class="fas fa-archive my-3 d-block text-white fa-2x"></i>Table Block</h5>
+                    <p>@L["IntroduceBlock"]</p>
+                    <a class="show-table mb-3" abp-button="Success" href="/ThuVien/Block">Table here<i class="fa fa-sign-in ml-2"></i></a>
+                </div>
+
+                <div class="card-item col-lg-4 text-white text-center">
+                    <h5 class="text-center mb-4"><i class="fas fa-hands-helping my-3 d-block text-white fa-2x"></i>Table Borrow</h5>
+                    <p>@L["IntroduceBorrow"]</p>
+                    <a class="show-table mb-3" abp-button="Success" href="/ThuVien/Borrow">Table here<i class="fa fa-sign-in ml-2"></i></a>
+                </div>
+
+                <div class="card-item col-lg-4 text-white text-center">
+                    <h5 class="text-center mb-4"><i class="fas fa-book my-3 d-block fa-2x"></i>Table Book</h5>
+                    <p>@L["IntroduceBook"]</p>
+                    <a class="show-table mb-3" abp-button="Success" href="/ThuVien/Book">Table here<i class="fa fa-sign-in ml-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="introduce py-4 mt-4 text-center text-white">
+        <h3>@L["IntroduceChart"]</h3>
+    </div>
+
+    <div class="extention text-white mt-2 mx-1">
+        <div class="extention-header d-flex justify-content-between align-items-center">
+            <h4>Reader</h4>
+            <i class="icon-down fas fa-chevron-left"></i>
+        </div>
+
+        <div class="extention-body">
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                        <div class="row">
+                                            <div class="col-lg-5 mt-4">
+                                                <canvas id="TopReaderChart" width="400" height="400"></canvas>
+                                            </div>
+
+                                            <div class="table-responsive col-lg-7 pl-4">
+                                                <table id="TopReaderTable" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th class="TRT-Stt text-center" aria-controls="example2" aria-sort="ascending">@L["STT"]</th>
+                                                            <th class="TRT-ReaderName text-center" aria-controls="example2">@L["ReaderName"]</th>
+                                                            <th class="TRT-Age text-center" aria-controls="example2">@L["Age"]</th>
+                                                            <th class="TRT-Email text-center" aria-controls="example2">@L["Email"]</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div id="div_chart_detail" class="col-lg-12 m-auto pt-4" height="300">
+                                                <h3 id="text-show-info" class="text-center">Hover Chart Or Table To Display More Information</h3>
+                                                @*<canvas id="TopReaderChart_Detail"></canvas>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="extention text-white mt-2 mx-1">
+        <div class="extention-header d-flex justify-content-between align-items-center">
+            <h4>Category</h4>
+            <i class="icon-down fas fa-chevron-left"></i>
+        </div>
+
+        <div class="extention-body">
+            <div class="row">
+                <div class="col-7 m-auto">
+                    <canvas id="TopCategoryChart" height="400" width="400"></canvas>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <canvas id="TopCategoryChart_Detail"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="extention text-white mt-2 mx-1">
+        <div class="extention-header d-flex justify-content-between align-items-center">
+            <h4>Book</h4>
+            <i class="icon-down fas fa-chevron-left"></i>
+        </div>
+
+        <div class="extention-body">
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                        <div class="row">
+                                            <div class="col-lg-5 mt-4">
+                                                <canvas id="TopBookChart" width="400" height="400"></canvas>
+                                            </div>
+
+                                            <div class="table-responsive col-lg-7 pl-4">
+                                                <table id="TopBookTable" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th class="TBT-Stt text-center" aria-controls="example2" aria-sort="ascending">@L["STT"]</th>
+                                                            <th class="TBT-BookName text-center" aria-controls="example2">@L["BookName"]</th>
+                                                            <th class="TBT-AuthorBook text-center" aria-controls="example2">@L["AuthorBook"]</th>
+                                                            <th class="TBT-CategoryBook text-center" aria-controls="example2">@L["CategoryBook"]</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div id="div_chart_detail" class="col-lg-8 m-auto pt-4" height="300">
+                                                <canvas id="TopBookChart_IsReturn"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="introduce py-4 mt-4 text-center text-white">
+        <h2>@L["Thanks"]</h2>
+        <div class="leader mt-4">
+            <img class="leader-img rounded-circle" src="/Pages/img/Hoang.jfif" />
+            <div class="leader-name">Hoàng Nguyễn</div>
+        </div>
+
+        <div class="team my-3">
+            <h2 class="mb-3">Alpha team members:</h2>
+            <h5 class="team-member">Phạm Minh Tiến</h5>
+            <h5 class="team-member">Tôn Nữ Hoàng Giang</h5>
+            <h5 class="team-member">Ông Nguyễn Uyên Nhi</h5>
+            <h5 class="team-member">Lê Minh Trí</h5>
+            <h5 class="team-member">Liên Thị Quỳnh Nga</h5>
+        </div>
+    </div>
+
+</div>
+
+<head>
+    <script src="~/libs/chart/chart.min.js"></script>
+</head>

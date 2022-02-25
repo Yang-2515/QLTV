@@ -1,0 +1,104 @@
+@page
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using QLTV.Web.Pages.ThuVien.Reader
+@using QLTV.Localization
+@using QLTV.Permissions
+@model IndexModel
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<QLTVResource> L
+@inject IAuthorizationService Authorization
+@{
+    PageLayout.Content.Title = L["Reader"].Value;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/ThuVien/Reader/index.js" />
+}
+@section styles
+{
+    <abp-style src="/Pages/ThuVien/Reader/index.css" />
+}
+<section class="content mt-2 p-0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-search">
+
+                    <!-- /.box-header -->
+                    <div class="card-body introduce">
+                        <div class="form-group search-form-group">
+                            <label class="text-white" for="search">@L["Search_Key_Reader"].Value</label>
+
+                            <div class="input-group search-input-group">
+                                <input type="text" id="keyword" class="form-control search-form-control"
+                                       placeholder="@L["Search_Reader"].Value">
+                                <span class="input-group-append">
+                                    <button type="submit" class="btn btn-default" id="Search">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <span class="text-danger field-validation-valid" data-valmsg-for="search" data-valmsg-replace="true">
+                            </span>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content-header pb-2 p-1">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="text-right col-md-12">
+                @if (await Authorization.IsGrantedAsync(QLTVPermissions.Reader.Create))
+                {
+                    <button id="NewReader" class="btn btn-add-general btn-create"
+                            type="button" data-busy-text="Processing...">
+                        <i class="fa fa-plus pr-1"></i> <span>@L["Create"].Value</span>
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content d-flex ">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <div class="row">
+                                <div class="table-responsive col-sm-12">
+                                    <table id="ReaderTable" class="text-white table table-bordered table-hover dataTable dtr-inline" role="grid">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="RT-Stt" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending">@L["STT"].Value</th>
+                                                <th class="RT-NameReader" aria-controls="example2" rowspan="1" colspan="1">@L["NameReader"].Value</th>
+                                                <th class="TRT-Age" aria-controls="example2" rowspan="1" colspan="1">@L["Age"].Value</th>
+                                                <th class="RT-Address" aria-controls="example2" rowspan="1" colspan="1">@L["Address"].Value</th>
+                                                <th class="RT-Phone" aria-controls="example2" rowspan="1" colspan="1">@L["Phone"].Value</th>
+                                                <th class="RT-Email" aria-controls="example2" rowspan="1" colspan="1">@L["Email"].Value</th>
+                                                <th class="RT-IdCard px-0" aria-controls="example2" rowspan="1" colspan="1">@L["IdCard"].Value</th>
+                                                <th class="RT-Delete" aria-controls="example2" rowspan="1" colspan="1"></th>
+                                            </tr>.
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
